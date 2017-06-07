@@ -1,7 +1,10 @@
+#define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <Magick++.h>
+#include "stb_image.h"
+#include "stb_image_write.h"
 
 using namespace std;
 
@@ -14,26 +17,38 @@ static wchar_t* charToWChar(const char* text)
 }
 
 int main(int argc, char *argv[]) {
-	if (argc != 3) {
-		
-		cout << "Correct call: " << argv[0] << " [image_name].[jpg/png/bmp] [jpg/bmp/png/jpe]";
-		int a;
-		cin >> a;
+	char new_name[100];
+
+	if (argc != 3 && argc != 4) {
+		cout << "Correct call: " << argv[0] << " [image_name].[jpg/png/bmp/gif/hdr/psd/pic] [bmp/png/tga] [new_name](optional)";
+		return -1;
 	}
-	else {
-			cout << "arg[1] = " << argv[1] << endl;
-			cout << "arg[2] = " << argv[2] << endl;
-			string image_path = argv[1];
-			string image_name = image_path.substr(0, image_path.find("."));
-			string image_format = image_path.substr(image_path.find(".") + 1, image_path.length() - image_path.find("."));
-			
+	else if (argc == 4) {
+		strcpy(new_name, argv[3]);
+		strcat(new_name, ".");
+		strcat(new_name, argv[2]);
+	}
+	else if (argc == 3) {
+		strcpy(new_name, "result");
+		strcat(new_name, ".");
+		strcat(new_name, argv[2]);
+	}
+	
+		int width, height, bpp;
+		unsigned char* rgb = stbi_load(argv[1], &width, &height, &bpp, 3);
 
-			cout << "path: " << image_path << endl;
-			cout << "name: " << image_name << endl;
-			cout << "format: " << image_format << endl;
+		int error = 1;
+		string new_format = argv[2];
+		if (new_format == "bmp")
+			error = stbi_write_bmp(new_name, width, height, 3, rgb);
+		else if (new_format == "png")
+			error = stbi_write_png(new_name, width, height, 3, rgb, 0);
+		else if (new_format == "tga")
+			error = stbi_write_tga(new_name, width, height, 3, rgb);
 
-			int a;
-			cin >> a;
-		}
+		if (error = 0) cout << "ERROR :(";
+		else cout << "SUCCESS! :)";
+		stbi_image_free(rgb);
 
 }
+
