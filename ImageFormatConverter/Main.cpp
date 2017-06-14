@@ -5,7 +5,7 @@
 #include <string>
 #include "stb_image.h"
 #include "stb_image_write.h"
-
+#include "IOManager.h"
 using namespace std;
 
 static wchar_t* charToWChar(const char* text)
@@ -16,39 +16,37 @@ static wchar_t* charToWChar(const char* text)
 	return wText;
 }
 
+//jpg -> png
+//jpg -> bmp
+//jpg -> tga
+//png -> bmp
+//png -> tga
+//Converter.exe name.type newType newName
 int main(int argc, char *argv[]) {
-	char new_name[100];
 
-	if (argc != 3 && argc != 4) {
-		cout << "Correct call: " << argv[0] << " [image_name].[jpg/png/bmp/gif/hdr/psd/pic] [bmp/png/tga] [new_name](optional)";
-		return -1;
-	}
-	else if (argc == 4) {
-		strcpy(new_name, argv[3]);
-		strcat(new_name, ".");
-		strcat(new_name, argv[2]);
-	}
-	else if (argc == 3) {
-		strcpy(new_name, "result");
-		strcat(new_name, ".");
-		strcat(new_name, argv[2]);
-	}
-	
-		int width, height, bpp;
-		unsigned char* rgb = stbi_load(argv[1], &width, &height, &bpp, 3);
+	IOManager IOManager;
+	IOManager.readParams(argc, argv);
 
-		int error = 1;
-		string new_format = argv[2];
-		if (new_format == "bmp")
-			error = stbi_write_bmp(new_name, width, height, 3, rgb);
-		else if (new_format == "png")
-			error = stbi_write_png(new_name, width, height, 3, rgb, 0);
-		else if (new_format == "tga")
-			error = stbi_write_tga(new_name, width, height, 3, rgb);
+	cout << endl << "Name: " << IOManager.getName() << endl;
+	cout << "Type: " << IOManager.getType() << endl;
+	cout << "New type: " << IOManager.getNewType() << endl;
+	cout << "New name: " << IOManager.getNewName() << endl;
 
-		if (error = 0) cout << "ERROR :(";
-		else cout << "SUCCESS! :)";
-		stbi_image_free(rgb);
+	int width, height, bpp;
+	unsigned char* rgb = stbi_load(argv[1], &width, &height, &bpp, 3);
+
+	int error = 1;
+	string new_format = IOManager.getNewType();
+	if (new_format == "bmp")
+		error = stbi_write_bmp((IOManager.getNewName() + ".bmp").c_str(), width, height, 3, rgb);
+	else if (new_format == "png")
+		error = stbi_write_png((IOManager.getNewName()+".png").c_str(), width, height, 3, rgb, 0);
+	else if (new_format == "tga")
+		error = stbi_write_tga((IOManager.getNewName() + ".tga").c_str(), width, height, 3, rgb);
+
+	if (error = 0) cout << "ERROR :(";
+	else cout << "SUCCESS! :)";
+	stbi_image_free(rgb);
 
 }
 
