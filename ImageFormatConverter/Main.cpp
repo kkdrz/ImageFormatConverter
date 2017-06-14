@@ -26,9 +26,10 @@ int main(int argc, char *argv[]) {
 	IOManager IOManager;
 	Converter converter;
 	IOManager.readParams(argc, argv);
-	bool error = converter.convert(IOManager.getNameWithNewType(), toEnumType(IOManager.getType()), toEnumType(IOManager.getNewType()));
+	bool error = converter.convert(IOManager.getNameWithType(), toEnumType(IOManager.getType()), toEnumType(IOManager.getNewType()), IOManager.getNewNameWithNewType());
 
-	cout << endl << error ? "ERROR :(" : "SUCCESS! :)";
+	if (error) cout << "SUCCESS :)";
+	else cout << "ERROR :( Check if the file exists!";
 	
 }
 

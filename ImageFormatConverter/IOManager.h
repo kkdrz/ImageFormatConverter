@@ -12,13 +12,12 @@ class IOManager
 public:
 	
 	bool readParams(int paramsNumber, char *params[]);
-	static const vector<string> SUPPORTED_IN_FORMATS;
-	static const vector<string> SUPPORTED_OUT_FORMATS;
 	string getNewType();
 	string getNewName();
 	string getName();
 	string getType();
-	string getNameWithNewType();
+	string getNewNameWithNewType();
+	string getNameWithType();
 
 private:
 	ImageInfo imageInfo;

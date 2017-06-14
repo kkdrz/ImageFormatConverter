@@ -55,7 +55,12 @@ string IOManager::getType()
 	return imageInfo.getType();
 }
 
-string IOManager::getNameWithNewType()
+string IOManager::getNameWithType()
+{
+	return getName() + "." + getType(); 
+}
+
+string IOManager::getNewNameWithNewType()
 {
 	return newName + "." + newType;
 }
