@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Utils.h"
 using namespace std;
 
 class ImageInfo

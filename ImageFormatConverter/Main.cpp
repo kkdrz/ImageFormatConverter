@@ -1,11 +1,10 @@
-#define STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_WRITE_IMPLEMENTATION
+
 #include <fstream>
 #include <iostream>
 #include <string>
-#include "stb_image.h"
-#include "stb_image_write.h"
+#include "Utils.h"
 #include "IOManager.h"
+#include "Converter.h"
 using namespace std;
 
 static wchar_t* charToWChar(const char* text)
@@ -25,28 +24,11 @@ static wchar_t* charToWChar(const char* text)
 int main(int argc, char *argv[]) {
 
 	IOManager IOManager;
+	Converter converter;
 	IOManager.readParams(argc, argv);
+	bool error = converter.convert(IOManager.getNameWithNewType(), toEnumType(IOManager.getType()), toEnumType(IOManager.getNewType()));
 
-	cout << endl << "Name: " << IOManager.getName() << endl;
-	cout << "Type: " << IOManager.getType() << endl;
-	cout << "New type: " << IOManager.getNewType() << endl;
-	cout << "New name: " << IOManager.getNewName() << endl;
-
-	int width, height, bpp;
-	unsigned char* rgb = stbi_load(argv[1], &width, &height, &bpp, 3);
-
-	int error = 1;
-	string new_format = IOManager.getNewType();
-	if (new_format == "bmp")
-		error = stbi_write_bmp((IOManager.getNewName() + ".bmp").c_str(), width, height, 3, rgb);
-	else if (new_format == "png")
-		error = stbi_write_png((IOManager.getNewName()+".png").c_str(), width, height, 3, rgb, 0);
-	else if (new_format == "tga")
-		error = stbi_write_tga((IOManager.getNewName() + ".tga").c_str(), width, height, 3, rgb);
-
-	if (error = 0) cout << "ERROR :(";
-	else cout << "SUCCESS! :)";
-	stbi_image_free(rgb);
-
+	cout << endl << error ? "ERROR :(" : "SUCCESS! :)";
+	
 }
 

@@ -1,16 +1,6 @@
 #include "IOManager.h"
-#include <iostream>
+
 using namespace std;
-
-const vector<string> IOManager::SUPPORTED_IN_FORMATS = { "jpg", "png", "bmp", "gif", "hdr", "psd", "pic" };
-const vector<string> IOManager::SUPPORTED_OUT_FORMATS = { "bmp", "png", "tga" };
-
-static void printArray(const vector<string> array) {
-	for (int i = 0; i < array.size(); i++) {
-		cout << array[i];
-		if (i < array.size() - 1) cout << "/";
-	}
-}
 
 bool IOManager::readParams(int paramsNumber, char *params[])
 {
@@ -40,6 +30,7 @@ bool IOManager::readParams(int paramsNumber, char *params[])
 		return false;
 	}
 	newType = params[2];
+	toLowerCase(newType);
 	newName = paramsNumber == 4 ? params[3] : imageInfo.getName();
 	return true;
 }
@@ -64,15 +55,13 @@ string IOManager::getType()
 	return imageInfo.getType();
 }
 
-bool IOManager::checkOutType(string type)
+string IOManager::getNameWithNewType()
 {
-	if (find(begin(SUPPORTED_OUT_FORMATS), end(SUPPORTED_OUT_FORMATS), type) == end(SUPPORTED_OUT_FORMATS)) return false;
-	return true;
+	return newName + "." + newType;
 }
 
-bool IOManager::checkInType(string type)
-{
-	if (find(begin(SUPPORTED_IN_FORMATS), end(SUPPORTED_IN_FORMATS), type) == end(SUPPORTED_IN_FORMATS)) return false;
-	return true;
-}
+
+
+
+
 
