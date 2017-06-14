@@ -15,5 +15,6 @@ public:
 
 private:
 	void printSameTypes();
+	void notSupported();
 };
 

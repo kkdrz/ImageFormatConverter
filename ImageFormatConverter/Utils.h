@@ -5,10 +5,10 @@
 #include <vector>
 using namespace std;
 
-enum class Type { JPG, PNG, BMP, TGA, NONE };
+enum class Type { JPG, PNG, BMP, TGA, HDR, GIF, PSD, PIC, NONE }; //remember to edit toEnumType func
 
-static const vector<string> SUPPORTED_IN_FORMATS = { "jpg", "png", "bmp", "gif", "hdr", "psd", "pic" };
-static const vector<string> SUPPORTED_OUT_FORMATS = { "bmp", "png", "tga" };
+static const vector<string> SUPPORTED_IN_FORMATS = { "jpg", "png", "bmp", "hdr", "gif", "hdr", "psd", "pic" };
+static const vector<string> SUPPORTED_OUT_FORMATS = { "bmp", "png", "tga"};
 
 static void printArray(const vector<string> array) {
 	for (int i = 0; i < array.size(); i++) {
@@ -28,6 +28,9 @@ static Type toEnumType(string &str)
 	if (str == "png") return Type::PNG;
 	if (str == "bmp") return Type::BMP;
 	if (str == "tga") return Type::TGA;
+	if (str == "gif") return Type::GIF;
+	if (str == "psd") return Type::PSD;
+	if (str == "pic") return Type::PIC;
 	return Type::NONE;
 }
 

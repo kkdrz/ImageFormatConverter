@@ -15,11 +15,7 @@ static wchar_t* charToWChar(const char* text)
 	return wText;
 }
 
-//jpg -> png
-//jpg -> bmp
-//jpg -> tga
-//png -> bmp
-//png -> tga
+
 //Converter.exe name.type newType newName
 int main(int argc, char *argv[]) {
 

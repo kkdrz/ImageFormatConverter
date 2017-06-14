@@ -1,3 +1,7 @@
 ﻿  Main.cpp
+  IOManager.cpp
+  ImageInfo.cpp
+  Converter.cpp
+  Generating Code...
   ImageFormatConverter.vcxproj -> C:\Users\Konrad\Documents\Visual Studio 2015\Projects\ImageFormatConverter\x64\Debug\ImageFormatConverter.exe
   ImageFormatConverter.vcxproj -> C:\Users\Konrad\Documents\Visual Studio 2015\Projects\ImageFormatConverter\x64\Debug\ImageFormatConverter.pdb (Full PDB)
